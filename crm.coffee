@@ -18,7 +18,6 @@ open_case = (data) ->
       Type: 'Electrical'
       Reason: 'Breakdown'
       Product__c: 'ThermoStat'
-      Sensor_Location__c: data.location || 'Osaka, Japan',
       Error_Code__c: data.code,
       (err, ret) ->
         console.log(err) if err
