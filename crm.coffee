@@ -1,9 +1,6 @@
 # create 'Case' objects in CRM when we see
 # device failures
 #
-#
-#
-
 salesforce = require("node-salesforce")
 
 cols = (name) ->
@@ -37,7 +34,7 @@ open_case = (data) ->
       Error_Code__c: data.code,
       (err, ret) ->
         console.log(err) if err
-        console.log("succes=#{ret.success} case_id=#{ret.id}")
+        console.log("success=#{ret.success} case_id=#{ret.id}")
 
 exports.log_drain = (req, res) ->
   (open_case(line) if line.failure) for line in req.body
