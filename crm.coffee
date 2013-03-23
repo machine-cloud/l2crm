@@ -25,6 +25,7 @@ open_case = (data) ->
     console.log(err) if err
     sf.sobject('Case').create
       Type: data.type || 'Electrical'
+      OwnerId: process.env.OWNER_ID || "005i0000000dHa7"
       Reason: decode(data.code)
       ContactId: process.env.CONTACT_ID || '003i0000004JYXi'
       Device_Id__c: data.device_id
