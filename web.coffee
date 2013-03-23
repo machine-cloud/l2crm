@@ -20,7 +20,7 @@ app.configure "development", ->
 app.configure 'production', ->
   app.use express.logger
     buffer: false
-    format: "ns=\"mc.errortrends\" measure=\"http.:method\" source=\":url\" status=\":status\" elapsed=\":response-time\" from=\":remote-addr\" agent=\":user-agent\""
+    format: "ns=\"mc.l2crm\" measure=\"http.:method\" source=\":url\" status=\":status\" elapsed=\":response-time\" from=\":remote-addr\" agent=\":user-agent\""
 
 app.configure ->
   app.set "port", process.env.PORT or 3000
