@@ -9,10 +9,11 @@ cols = (name) ->
     sf.sobject(name).describe (err, meta) ->
       console.log field.name for field in meta.fields
 
-
 decode = (code) ->
-  switch parseInt(code)
-   when 42 then 'Sensor Broken'
+  if message = process.env["CODE_#{code}"]
+    message
+  else
+    'Sensor Failed'
 
 with_the_force = (cb) ->
   sf = new salesforce.Connection()
