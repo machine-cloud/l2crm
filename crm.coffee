@@ -12,7 +12,7 @@ cols = (name) ->
 
 decode = (code) ->
   switch parseInt(code)
-   when 42 then 'LED Broken'
+   when 42 then 'Sensor Broken'
 
 with_the_force = (cb) ->
   sf = new salesforce.Connection()
