@@ -13,6 +13,8 @@ To set error messages, create an ENV var named `CODE_<N>` where N is the code nu
 
 ## ENV
 
+    RATE_LIMIT - number of seconds to wait before opening another support case
+                 for a given device id / error code
     CRM_USERNAME
     CRM_PASSWORD
 
