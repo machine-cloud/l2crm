@@ -1,9 +1,6 @@
 # l2crm
-#### (where x = CRM)
 
-This log drain looks for device failures (failure=true) and opens
-up a support case in CRM, it reports the error by reading
-the error code (code=XX) in the log line.
+This app works as a drain for the logplex stream monitoring it for device failures (failure=true). When failure is detected, a case is opened in Service Cloud using the Force.com REST API. Error code is determeined by reading code=XX in the log line.
 
 To set error messages, create an ENV var named `CODE_<N>` where N is the code number.  For example, to create the message for error code 42 set `CODE_42` to your desired message.
 
