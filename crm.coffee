@@ -37,7 +37,7 @@ open_case = (data) ->
         Type: data.type || 'Electrical'
         OwnerId: process.env.OWNER_ID || "005i0000000dHa7"
         Reason: decode(data.code)
-        ContactId: process.env.CONTACT_ID || '003i0000004JYXi'
+        ContactId: process.env.CONTACT_ID || '003i0000008BypF'
         Device_Id__c: data.device_id
         Product__c: "#{data.device_type || 'Virtual'} Thermostat"
         Sensor_Location__Latitude__s: data.lat || 42
