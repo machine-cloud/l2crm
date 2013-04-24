@@ -2,11 +2,14 @@
 ###
 Module dependencies.
 ###
+async = require("async")
 express = require("express")
 http = require("http")
 path = require("path")
 logplex = require("./logplex")
 routes  = require("./crm")
+salesforce = require("node-salesforce")
+
 app = express()
 
 express.logger.format "method",     (req, res) -> req.method.toLowerCase()
@@ -34,6 +37,28 @@ app.configure ->
 # Connect Routes
 app.post "/logs", routes.log_drain
 app.get  "/", (req, res) -> res.send("NOTHING TO SEE HERE")
+
+reset_auth = express.basicAuth("heroku", process.env.HTTP_PASSWORD)
+
+app.get "/reset", reset_auth, (req, res) ->
+  sf = new salesforce.Connection()
+  sf.login process.env.CRM_USERNAME, process.env.CRM_PASSWORD, (err, user) ->
+    async.parallel
+      case: (aacb) ->
+        sf.query "SELECT Id FROM Case", (err, result) ->
+          async.parallel (result.records.map (record) ->
+            (acb) ->
+              sf.sobject("Case").destroy record.Id, acb),
+            aacb
+      chatter: (aacb) ->
+        sf.query "SELECT Id FROM FeedItem", (err, result) ->
+          async.parallel (result.records.map (record) ->
+            (acb) ->
+              sf.sobject("FeedItem").destroy record.Id, acb),
+          aacb
+      (err, results) ->
+        res.send "ok"
+
 
 # Listen for Requests
 http.createServer(app).listen app.get("port"), ->
