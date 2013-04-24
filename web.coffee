@@ -57,6 +57,8 @@ app.get "/reset", reset_auth, (req, res) ->
               sf.sobject("FeedItem").destroy record.Id, acb),
           aacb
       (err, results) ->
+        console.log "err", err
+        console.log "results", results
         res.send "ok"
 
 
