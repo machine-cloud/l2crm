@@ -6,7 +6,7 @@ async = require("async")
 express = require("express")
 http = require("http")
 path = require("path")
-logplex = require("./logplex")
+logfmt = require("logfmt")
 routes  = require("./crm")
 salesforce = require("node-salesforce")
 
@@ -29,9 +29,8 @@ app.configure ->
   app.set "port", process.env.PORT or 3000
   app.use express.favicon()
   app.use express.methodOverride()
-  # LogPlex body parser
-  app.use logplex()
   app.use express.bodyParser()
+  app.use logfmt.bodyParserStream()
   app.use app.router
 
 # Connect Routes

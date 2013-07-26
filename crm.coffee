@@ -1,6 +1,7 @@
 # create 'Case' objects in CRM when we see
 # device failures
 #
+through    = require('through')
 salesforce = require("node-salesforce")
 redis      = require('./configure').createRedisClient()
 
@@ -30,6 +31,7 @@ rate_limit = (key, callback) ->
     redis.setex key, RATE_LIMIT, (new Date()).getTime(), redis.print
 
 open_case = (data) ->
+  return unless data.failure
   open_the_case = ->
     with_the_force (err, sf) ->
       console.log(err) if err
@@ -50,5 +52,5 @@ open_case = (data) ->
   rate_limit(key, open_the_case)
 
 exports.log_drain = (req, res) ->
-  open_case(line) for line in req.body when line.failure
+  req.body.pipe(through(open_case)) if req.body
   res.send('OK')
