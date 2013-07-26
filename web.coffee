@@ -29,8 +29,8 @@ app.configure ->
   app.set "port", process.env.PORT or 3000
   app.use express.favicon()
   app.use express.methodOverride()
-  app.use express.bodyParser()
   app.use logfmt.bodyParserStream()
+  app.use express.bodyParser()
   app.use app.router
 
 # Connect Routes
